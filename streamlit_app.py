@@ -15,10 +15,10 @@ DATABASE_URL = (
 )
 
 # Supabase credentials
-SUPABASE_URL = "https://db.nnaobjdfyzurnxbthfnb.supabase.co"  # Replace with your Supabase URL
-SUPABASE_ANON_KEY = "6Bmkar6YMx@Q63C"  # Replace with your Supabase password/anon key
+SUPABASE_URL = "https://nnaobjdfyzurnxbthfnb.supabase.co"  # Replace with your project URL
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5uYW9iamRmeXp1cm54YnRoZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY1NTU5ODgsImV4cCI6MjA1MjEzMTk4OH0.QjepJKeumWt4gBpRxq97XwVm0TN1uN6GNt_AN3nhUWM"
 
-# Initialize Supabase client
+# Initialize the Supabase client
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 # --------------------------------------------------------------------------
