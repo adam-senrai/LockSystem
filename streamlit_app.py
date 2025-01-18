@@ -337,7 +337,7 @@ elif role == "Keyholder/Master":
             # Keyholder can lock the wearer directly if no cashapp_tag is set
             if not wearer["cashapp_tag"] or wearer["cashapp_tag"].strip() == "":
                 # Go straight to the lock UI
-                st.warning("This wearer/sub is currently not locked (no CashApp tag set).")
+                st.warning("This wearer/sub is currently not locked. You may lock them with a password of your choice.")
                 new_pass = st.text_input("Enter a password to lock the sub.", type="password")
                 confirm_pass = st.text_input("Confirm the password", type="password")
 
