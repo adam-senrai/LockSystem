@@ -1,4 +1,4 @@
-streamlit        # Replace with your desired version
-psycopg2-binary      # The recommended version of psycopg2
-supabase-py     # Supabase client library
-requests 
+streamlit==1.25.0       # Replace with the version you're using
+psycopg2-binary==2.9.7  # For PostgreSQL database connection
+supabase-py==0.2.6      # Supabase client library
+requests==2.31.0        # For HTTP requests
