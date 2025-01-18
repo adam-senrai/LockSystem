@@ -401,7 +401,6 @@ elif role == "Keyholder/Master":
                        st.session_state["keyholder_status"] = wearer
                        # Immediately allow management
                        st.session_state["valid_keyholder_pass"] = True
-
                 if wearer["locked"] and st.session_state.get("valid_keyholder_pass", False):
                     st.subheader("Manage Wearer/Sub")
                     st.info(f"Current Unlock Date: {wearer['expiration_date']}")
