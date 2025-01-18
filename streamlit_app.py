@@ -11,7 +11,7 @@ import requests
 # Supabase Credentials
 # --------------------------------------------------------------------------
 DATABASE_URL = (
-    "postgresql://postgres:6Bmkar6YMx@Q63C@db.nnaobjdfyzurnxbthfnb.supabase.co:5432/postgres"
+    "postgresql://postgres:6Bmkar6YMx@Q63C@db.nnaobjdfyzurnxbthfnb.supabase.co:5432/postgres" 
 )
 
 # --------------------------------------------------------------------------
