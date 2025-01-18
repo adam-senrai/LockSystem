@@ -345,7 +345,6 @@ elif role == "Keyholder/Master":
                     st.session_state["keyholder_status"] = wearer
 
         # If not locked, confirm CashApp tag and lock
-# If not locked, confirm CashApp tag and lock
        else:
            st.write("**Confirm the Sub's CashApp tag to proceed (if applicable).**")
            entered_cashapp_tag = st.text_input(
