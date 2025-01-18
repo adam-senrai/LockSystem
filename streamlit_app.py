@@ -14,6 +14,13 @@ DATABASE_URL = (
     "postgresql://postgres:6Bmkar6YMx@Q63C@db.nnaobjdfyzurnxbthfnb.supabase.co:5432/postgres" 
 )
 
+# Supabase credentials
+SUPABASE_URL = "https://db.nnaobjdfyzurnxbthfnb.supabase.co"  # Replace with your Supabase URL
+SUPABASE_ANON_KEY = "6Bmkar6YMx@Q63C"  # Replace with your Supabase password/anon key
+
+# Initialize Supabase client
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_ANON_KEY)
+
 # --------------------------------------------------------------------------
 # PostgreSQL Connection URL
 # --------------------------------------------------------------------------
