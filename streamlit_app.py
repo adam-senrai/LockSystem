@@ -357,7 +357,7 @@ elif role == "Keyholder/Master":
             if st.button("Confirm Sub Identity"):
                 if not wearer["cashapp_tag"]:
                     # The sub did not set a CashApp tag in the DB
-                    if entered_cashapp_tag.strip() == "":
+                    if not sub_tag or sub_tag.strip() == "":
                         st.success("No CashApp tag was set, identity confirmed.")
                         st.session_state["cashapp_confirmed"] = True
                     else:
