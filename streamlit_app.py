@@ -345,88 +345,88 @@ elif role == "Keyholder/Master":
                     st.session_state["keyholder_status"] = wearer
 
         # If not locked, confirm CashApp tag and lock
-       else:
-           st.write("**Confirm the Sub's CashApp tag to proceed (if applicable).**")
-           entered_cashapp_tag = st.text_input(
-               "Enter the Wearer's CashApp tag to confirm identity (or leave blank if not set).",
-               key="confirm_cashapp_tag"
-           )
-       
-           if st.button("Confirm Sub Identity"):
-               if not wearer["cashapp_tag"]:  # If no CashApp tag was set by the sub
-                   if entered_cashapp_tag.strip() == "":
-                       st.success("No CashApp tag was set, identity confirmed.")
-                       st.session_state["cashapp_confirmed"] = True
-                   else:
-                       st.warning("This wearer has no CashApp tag on file, and the entered tag is ignored.")
-                       st.session_state["cashapp_confirmed"] = True
-               else:  # If a CashApp tag exists, validate it
-                   if entered_cashapp_tag.strip().lower() == wearer["cashapp_tag"].strip().lower():
-                       st.success("CashApp tag matched! You can proceed.")
-                       st.session_state["cashapp_confirmed"] = True
-                   else:
-                       st.error("CashApp tag mismatch. You cannot lock this sub.")
-                       st.session_state["cashapp_confirmed"] = False
-       
-           if st.session_state.get("cashapp_confirmed", False):
-               st.warning("This wearer/sub is currently not locked.")
-               new_pass = st.text_input("Enter a password to lock the sub.", type="password")
-               confirm_pass = st.text_input("Confirm the password", type="password")
-       
-               if st.button("Lock Wearer/Sub"):
-                   if not new_pass or not confirm_pass:
-                       st.error("Please enter and confirm the password.")
-                   elif new_pass != confirm_pass:
-                       st.error("Passwords do not match. Try again.")
-                   else:
-                       future_date = datetime.now() + timedelta(days=1)
-                       conn = get_connection()
-                       if conn:
-                           with conn.cursor() as cur:
-                               cur.execute("""
-                                   UPDATE wearers
-                                   SET locked = TRUE,
-                                       keyholder_pass = %s,
-                                       expiration_date = %s
-                                   WHERE id = %s
-                               """, (new_pass, future_date, wearer_id_master))
-                               conn.commit()
-                           conn.close()
-       
-                       st.success(f"Wearer locked successfully! Keyholder pass: {new_pass}")
-                       st.warning("Please screenshot or copy this pass as it won't be shown again.")
-                       wearer["locked"] = True
-                       wearer["keyholder_pass"] = new_pass
-                       wearer["expiration_date"] = future_date
-                       st.session_state["keyholder_status"] = wearer
-                       # Immediately allow management
-                       st.session_state["valid_keyholder_pass"] = True
-                if wearer["locked"] and st.session_state.get("valid_keyholder_pass", False):
-                    st.subheader("Manage Wearer/Sub")
-                    st.info(f"Current Unlock Date: {wearer['expiration_date']}")
-
-                    add_time = st.number_input("Add time (in hours)", step=1, min_value=0, key="add_time2")
-                    remove_time = st.number_input("Remove time (in hours)", step=1, min_value=0, key="remove_time2")
-
-                    if st.button("Update Unlock Date", key="update_unlock_date_newly_locked"):
-                        new_date = wearer["expiration_date"] or datetime.now()
-                        new_date += timedelta(hours=add_time)
-                        new_date -= timedelta(hours=remove_time)
-
-                        conn = get_connection()
-                        if conn:
-                            with conn.cursor() as cur:
-                                cur.execute("""
-                                    UPDATE wearers
-                                    SET expiration_date = %s
-                                    WHERE id = %s
-                                """, (new_date, wearer_id_master))
-                                conn.commit()
-                            conn.close()
-
-                        st.success(f"Unlock date updated to: {new_date}")
-                        wearer["expiration_date"] = new_date
-                        st.session_state["keyholder_status"] = wearer
+            else:
+                st.write("**Confirm the Sub's CashApp tag to proceed (if applicable).**")
+                entered_cashapp_tag = st.text_input(
+                    "Enter the Wearer's CashApp tag to confirm identity (or leave blank if not set).",
+                    key="confirm_cashapp_tag"
+                )
+            
+                if st.button("Confirm Sub Identity"):
+                    if not wearer["cashapp_tag"]:  # If no CashApp tag was set by the sub
+                        if entered_cashapp_tag.strip() == "":
+                            st.success("No CashApp tag was set, identity confirmed.")
+                            st.session_state["cashapp_confirmed"] = True
+                        else:
+                            st.warning("This wearer has no CashApp tag on file, and the entered tag is ignored.")
+                            st.session_state["cashapp_confirmed"] = True
+                    else:  # If a CashApp tag exists, validate it
+                        if entered_cashapp_tag.strip().lower() == wearer["cashapp_tag"].strip().lower():
+                            st.success("CashApp tag matched! You can proceed.")
+                            st.session_state["cashapp_confirmed"] = True
+                        else:
+                            st.error("CashApp tag mismatch. You cannot lock this sub.")
+                            st.session_state["cashapp_confirmed"] = False
+            
+                if st.session_state.get("cashapp_confirmed", False):
+                    st.warning("This wearer/sub is currently not locked.")
+                    new_pass = st.text_input("Enter a password to lock the sub.", type="password")
+                    confirm_pass = st.text_input("Confirm the password", type="password")
+            
+                    if st.button("Lock Wearer/Sub"):
+                        if not new_pass or not confirm_pass:
+                            st.error("Please enter and confirm the password.")
+                        elif new_pass != confirm_pass:
+                            st.error("Passwords do not match. Try again.")
+                        else:
+                            future_date = datetime.now() + timedelta(days=1)
+                            conn = get_connection()
+                            if conn:
+                                with conn.cursor() as cur:
+                                    cur.execute("""
+                                        UPDATE wearers
+                                        SET locked = TRUE,
+                                            keyholder_pass = %s,
+                                            expiration_date = %s
+                                        WHERE id = %s
+                                    """, (new_pass, future_date, wearer_id_master))
+                                    conn.commit()
+                                conn.close()
+            
+                            st.success(f"Wearer locked successfully! Keyholder pass: {new_pass}")
+                            st.warning("Please screenshot or copy this pass as it won't be shown again.")
+                            wearer["locked"] = True
+                            wearer["keyholder_pass"] = new_pass
+                            wearer["expiration_date"] = future_date
+                            st.session_state["keyholder_status"] = wearer
+                            # Immediately allow management
+                            st.session_state["valid_keyholder_pass"] = True
+                     if wearer["locked"] and st.session_state.get("valid_keyholder_pass", False):
+                         st.subheader("Manage Wearer/Sub")
+                         st.info(f"Current Unlock Date: {wearer['expiration_date']}")
+     
+                         add_time = st.number_input("Add time (in hours)", step=1, min_value=0, key="add_time2")
+                         remove_time = st.number_input("Remove time (in hours)", step=1, min_value=0, key="remove_time2")
+     
+                         if st.button("Update Unlock Date", key="update_unlock_date_newly_locked"):
+                             new_date = wearer["expiration_date"] or datetime.now()
+                             new_date += timedelta(hours=add_time)
+                             new_date -= timedelta(hours=remove_time)
+     
+                             conn = get_connection()
+                             if conn:
+                                 with conn.cursor() as cur:
+                                     cur.execute("""
+                                         UPDATE wearers
+                                         SET expiration_date = %s
+                                         WHERE id = %s
+                                     """, (new_date, wearer_id_master))
+                                     conn.commit()
+                                 conn.close()
+     
+                             st.success(f"Unlock date updated to: {new_date}")
+                             wearer["expiration_date"] = new_date
+                             st.session_state["keyholder_status"] = wearer
 
                     if st.button("Unlock Wearer/Sub", key="unlock_newly_locked"):
                         conn = get_connection()
