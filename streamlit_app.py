@@ -6,7 +6,7 @@ from supabase import create_client, Client
 import os
 import tempfile
 import requests
-
+  
 # --------------------------------------------------------------------------
 # Supabase Credentials
 # --------------------------------------------------------------------------
